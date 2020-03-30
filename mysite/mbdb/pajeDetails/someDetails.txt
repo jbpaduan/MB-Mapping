@@ -1,0 +1,17 @@
+# results of >> python manage.py sqlmigrate mbdb 0001
+
+
+(venv-stoqs) [vagrant@localhost mysite]$ python manage.py sqlmigrate mbdb 0001
+BEGIN;
+--
+-- Create model Expedition
+--
+CREATE TABLE "mbdb_expedition" ("id" serial NOT NULL PRIMARY KEY, "expedition_name" varchar(200) NOT NULL, "region_name" varchar(200) NOT NULL);
+--
+-- Create model Mission
+--
+CREATE TABLE "mbdb_mission" ("id" serial NOT NULL PRIMARY KEY, "survey_name" varchar(20) NOT NULL, "start_depth" integer NOT NULL, "expedition_id" integer NOT NULL);
+ALTER TABLE "mbdb_mission" ADD CONSTRAINT "mbdb_mission_expedition_id_15bc3d0f_fk_mbdb_expedition_id" FOREIGN KEY ("expedition_id") REFERENCES "mbdb_expedition" ("id") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "mbdb_mission_expedition_id_15bc3d0f" ON "mbdb_mission" ("expedition_id");
+COMMIT;
+
