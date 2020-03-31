@@ -3,5 +3,12 @@
 *.pyc
 __pycache__
 *.swp
+
+# Mac mount
 .DS_Store
+
+# Django tutorial files
 poll*
+
+# Logs
+geckodriver.log
