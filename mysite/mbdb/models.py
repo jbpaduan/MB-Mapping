@@ -7,14 +7,14 @@ from django.utils import timezone
 class Expedition(models.Model):
     expedition_name = models.CharField(max_length=200)
     region_name = models.CharField(max_length=200)
-    start_date = models.DateTimeField
+    start_date = models.DateTimeField(null=True)
     def __str__(self):
         return self.expedition_name
     def __str__(self):
         return self.region_name
     def was_started_recently(self):
         now = timezone.now()
-        return now-datetime.timedelta(days=30) <+ self.start_date <= now
+        return now-datetime.timedelta(days=30) <= self.start_date <= now
     was_started_recently.admin_order_field = 'start_date'
     was_started_recently.boolean = True
     was_started_recently.short_description = 'Started recently?'
