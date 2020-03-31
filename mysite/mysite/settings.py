@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'mbdb.apps.MbdbConfig',
-    'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -77,11 +76,8 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        ##'ENGINE': 'django.db.backends.sqlite3',
-        ##'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        # - Needs environ module - 'DATABASE_URL': 'postgis://stoqsadm:CHANGEME@127.0.0.1:5438/mysite'
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mysite',
+        'NAME': 'mbdb',
         'USER': 'postgres',
         'HOST': '',
         'PORT': '5438',
