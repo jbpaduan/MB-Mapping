@@ -20,6 +20,6 @@ logger = logging.getLogger(__name__)
 class BaseMbdbTestCase(TestCase):
 
     def test_expedition(self):
-        q = Expedition(expedition_name="Sur Ridge", region_name="Monterey Bay")
+        q = Expedition(expedition_name="Extravert Cliff", region_name="Monterey Bay")
         result = q.was_started_recently()
         self.assertEqual(result, True, f"Expedition {q} just created, 'was_started_recently()' should return True")
