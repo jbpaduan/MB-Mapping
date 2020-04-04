@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>MBDB expedition detail</title>
+  </head>
+  <body>
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'mbdb/style.css' %}">
+
+<div class="header">
+    <img class="header" src="{% static 'mbdb/images/mbsystem_logo.gif' %}" alt="mbsystem logo">
+</div>
+
+<h1>Details about expedition: {{ expedition.expedition_name }}</h1>
+
+<p>Region: {{ expedition.region_name }}<br/>
+Start date: {{ expedition.start_date }}<br/>
+Project PI: ...<br/>
+Chief Scientist: ...<br/>
+MBARI Expedition Database cruise ID: ...<br/>
+Server path: ...</p>
+
+<p>Missions:
+
+{% for mission in expedition.mission_set.all %}
+    <li>{{ mission.survey_name }}</li>
+{% endfor %}
+</ul>
+</p>
+
+<p><em>Want each mission to be hyperlinked to the mission.html page where details will be displayed.</em></p>
+
+
+
+  
+
+<div class="footer">
+  <hr class="solid">
+  <p>This is page /templates/mbdb/detail.html</p>
+  <p><a href="https://www.mbari.org/technology/seafloor-mapping/" target="_blank">MBARI Seafloor Mapping Lab</a>
+     | <a href="https://www.mbari.org/products/research-software/mb-system/" target="_blank">MB-System</a></p>
+</div>
+  </body>
+</html>

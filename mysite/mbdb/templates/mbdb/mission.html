@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>MBDB mission detail</title>
+  </head>
+  <body>
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'mbdb/style.css' %}">
+
+<div class="header">
+    <img class="header" src="{% static 'mbdb/images/mbsystem_logo.gif' %}" alt="mbsystem logo">
+</div>
+
+<h1>Details about mission {{ mission.survey_name }} collected on {{expedition.expedition_name}}</h1>
+
+<p>Mission: {{ mission.survey_name }}<br/>
+Start depth: {{ mission.start_depth }}<br/>
+Site name: ...<br/>
+Thumbnail: ...<br/>
+Mission type: ...</p>
+
+
+<p>&lt; &nbsp; &lt; &nbsp; Return to expedition details page for {{expedition.expedition_name}}</p>
+<!--Use a statement like: return HttpResponseRedirect(reverse('mbdb:detail', args=(mission.expedition,)))-->
+<!--to construct the URL in the above line to return to detail.html?-->
+
+
+
+  
+
+<div class="footer">
+  <hr class="solid">
+  <p>This is page /templates/mbdb/mission.html</p>
+  <p><a href="https://www.mbari.org/technology/seafloor-mapping/" target="_blank">MBARI Seafloor Mapping Lab</a>
+     | <a href="https://www.mbari.org/products/research-software/mb-system/" target="_blank">MB-System</a></p>
+</div>
+  </body>
+</html>

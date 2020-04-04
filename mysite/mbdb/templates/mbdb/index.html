@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>MBDB index page</title>
+  </head>
+  <body>
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'mbdb/style.css' %}">
+
+<div class="header">
+    <img class="header" src="{% static 'mbdb/images/mbsystem_logo.gif' %}" alt="mbsystem logo">
+</div>
+
+<h1>List of 5 most recent expeditions</h1>
+
+{% if latest_expedition_list %}
+    <ul>
+    {% for expedition in latest_expedition_list %}
+        <li><a href="{% url 'mbdb:detail' expedition.id %}">{{ expedition.expedition_name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No expeditions are available.</p>
+{% endif %}
+
+
+<!--"hard-coded" URL:-->
+<!--         <li><a href="/mbdb/{{ expedition.id }}/">{{ expedition.expedition_name }}</a></li>-->
+
+  
+
+<div class="footer">
+  <hr class="solid">
+  <p>This is page /templates/mbdb/index.html</p>
+  <p><a href="https://www.mbari.org/technology/seafloor-mapping/" target="_blank">MBARI Seafloor Mapping Lab</a>
+     | <a href="https://www.mbari.org/products/research-software/mb-system/" target="_blank">MB-System</a></p>
+</div>
+  </body>
+</html>
