@@ -2,6 +2,22 @@
 # Starting with Tutorial 2 (answers here are what is to be expected if it worked)
 # I've left their notes and annotated with some of my own.
 
+# to get into the postgres shell:
+psql -U postgres -p 5438
+for help:
+\?
+to quit:
+\q
+
+# for Django help at command line:
+mysite/manage.py help
+mysite/manage.py help createsuperuser
+
+# to get into the python shell:
+python manage.py shell
+# for python help: type "?"
+
+#-------------------------------------------------------------
 # Tutorial 2:
 # get into the shell by typing
 > python manage.py shell
@@ -18,15 +34,11 @@
 # Django expects a datetime with tzinfo for pub_date. Use timezone.now()
 # instead of datetime.datetime.now() and it will do the right thing.
 >>> from django.utils import timezone
->>> q = Expedition(expedition_name="Sur Ridge", region_name="Monterey Bay")
-
-##------ Mike, since the model version with all the fields didn't migrate,
-#  particularly start_date, this attribute couldn't be added
-#, start_date=timezone.now())
 
 # Note to me, have to figure out the format to enter prior dates in the API (should be no problem in a web form)
 #  plan to use their "timezone.now" for now.
 
+q = Expedition(expedition_name="Extravert Cliff", region_name="Monterey Bay", start_date=timezone.now())  
 #--------
 # Save the object into the database. You have to call save() explicitly.
 >>> q.save()
@@ -37,12 +49,17 @@
 
 # Access model field values via Python attributes.
 >>> q.expedition_name
-"Sur Ridge"
+"Extravert Cliff"
 
 
-#----- next won't work until this attribute is added
->>> q.start_date
-#datetime.datetime(2012, 2, 26, 13, 0, 0, 775217, tzinfo=<UTC>)
+#----- still don't know what format to use for entering dates
+##datetime.datetime(2012, 2, 26, 13, 0, 0, 775217, tzinfo=<UTC>) # but this gave an error
+#ValidationError: ['“2020, 2, 26, 13, 0, 0, 775217, tzinfo=<UTC>” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ] format.']
+# so did
+#q = Expedition(expedition_name="Extravert Cliff", region_name="Monterey Bay", start_date="
+   ...: 2020-02-26 UTC")
+   
+   
 #------
 # Change values by changing the attributes, then calling save().
 >>> q.expedition_name = "Extravert Cliff"
@@ -51,6 +68,7 @@
 # objects.all() displays all the expeditions in the database.
 >>> Expedition.objects.all()
 <QuerySet [<Expedition: Expedition object (1)>]>
+# ? actual: <QuerySet [<Expedition: Monterey Bay>]> # why doesn't it say "Expedition: Extravert Cliff"?
 
 #--------------------- further down in Tutorial 2 ------
 > python manage.py shell
@@ -60,7 +78,7 @@
 # Make sure our __str__() addition worked.
 >>> Expedition.objects.all()
 <QuerySet [<Expedition: Monterey Bay>]>
-## ? Why is the admin page returning "region_name", not "expedition_name"?
+## ? (as above) Why is the admin page returning "region_name", not "expedition_name"? Does it need an explicit field, "ID"?
 
 # Django provides a rich database lookup API that's entirely driven by
 # keyword arguments.
@@ -69,7 +87,6 @@
 >>> Expedition.objects.filter(expedition_name__startswith='Extr')
 <QuerySet [<Expedition: Extravert Cliff>]>
 
-#---won't work yet...-----
 # Get the expedition that started this year.
 >>> from django.utils import timezone
 >>> current_year = timezone.now().year
@@ -89,7 +106,7 @@ DoesNotExist: Expedition matching query does not exist.
 >>> Expedition.objects.get(pk=1)
 <Expedition: Extravert Cliff>
 
-# Make sure our custom method worked.
+# Make sure our custom method in models.py worked.
 >>> q = Expedition.objects.get(pk=1)
 >>> q.was_started_recently()
 True
@@ -114,8 +131,9 @@ True
 <Mission:20191230m1>
 
 # Mission objects have API access to their related Expedition objects.
+>>> c = Mission.objects.get(pk=1)
 >>> c.expedition
-<Expedition: 20200101m1>
+<Expedition: Monterey Bay>
 
 # And vice versa: Expedition objects get access to Mission objects.
 >>> q.mission_set.all()
@@ -126,13 +144,14 @@ True
 # The API automatically follows relationships as far as you need.
 # Use double underscores to separate relationships.
 # This works as many levels deep as you want; there's no limit.
-# Find all Mission for any expedition whose start_date is in this year
+# Find all Missions for any expedition whose start_date is in this year
 # (reusing the 'current_year' variable we created above).
 >>> Mission.objects.filter(expedition__start_date__year=current_year)
 <QuerySet [<Mission: 20200101m1>, <Mission: 20200101m2>, <Mission: 20191230m1>]>
 
 #---- didn't do this yet ----
 # Let's delete one of the missions. Use delete() for that.
->>> c = q.mission_set.filter(mission_name__startswith='2019')
+>>> c = q.mission_set.filter(survey_name__startswith='2019')
 >>> c.delete()
 
+#--------- END TUTORIAL 2 --------------
