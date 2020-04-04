@@ -1,0 +1,48 @@
+
+li a {
+    color: blue;
+}
+
+/* scale an image with the browser window 
+img.full_size {
+  max-width: 100%;
+  height: auto;
+}
+*/
+
+body {
+  background: white;
+  /*
+  background-image: url("images/mbsystem_logo.gif");
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  margin-right: 200px;
+  */
+}
+
+/* usage: <div class="header"> */
+.header {
+  text-align: center;
+  padding: 20px;
+}
+
+/* usage: <div class="footer"> */
+.footer {
+  width: 100%;
+  text-align: center;
+  bottom: 0;
+  padding: 0px;
+}
+
+
+
+/* Solid border */
+hr.solid {
+  border-top: 3px solid #bbb;
+}
+
+/*
+body {
+    background: white url("images/mbsystem_logo.gif") no-repeat;
+    opacity: 0.5;
+}*/
